@@ -1,16 +1,16 @@
 package lmsquery
 
 import (
-	"time"
-	"strconv"
-	"log"
-	"strings"
-	"fmt"
-	"encoding/json"
-	"crypto/sha1"
-	"net/http"
 	"bytes"
+	"crypto/sha1"
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
 )
 
 type Lmsquery struct {
