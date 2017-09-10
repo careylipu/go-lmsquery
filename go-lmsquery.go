@@ -42,7 +42,7 @@ func (ca lmsCommandArgs) MarshalJSON() ([]byte, error) {
 }
 
 type lmsResponse struct {
-	Id     string        `json:"id"`
+	Id     int           `json:"id"`
 	Method string        `json:"method"`
 	Params []interface{} `json:"params"`
 	Result Result        `json:"result"`
@@ -62,7 +62,7 @@ type Result struct {
 	Param2           string       `json:"_p2"`
 	Param3           string       `json:"_p3"`
 	Param4           string       `json:"_p4"`
-	Count            string       `json:"count"`
+	Count            int          `json:"count"`
 }
 
 type Alarm struct {
@@ -75,9 +75,9 @@ type Alarm struct {
 	NextExecution time.Time
 }
 type playerInfo struct {
-	IsPlaying string `json:"isplaying"`
+	IsPlaying int    `json:"isplaying"`
 	PlayerId  string `json:"playerid"`
-	Power     string `json:"power"`
+	Power     int    `json:"power"`
 	Name      string `json:"name"`
 	Ip        string `json:"ip"`
 }
@@ -156,7 +156,7 @@ func (l *Lmsquery) GetAlarms(playerId string, enabled bool) (int, []Alarm) {
 		filter = "filter:all"
 	}
 	res := l.query([]string{"alarms", "0", "99", filter}, playerId)
-	count, _ := strconv.Atoi(res.Count)
+	count := res.Count
 	// fill next alarm times
 	loc, _ := time.LoadLocation("Europe/Berlin")
 	for idx, alarm := range res.AlarmsLoop {
@@ -205,9 +205,6 @@ func (l *Lmsquery) GetNextAlarm(playerId string) (bool, Alarm) {
 	}
 }
 
-/**
-constructor
-*/
 func CreateLms(host string, port int) Lmsquery {
 	return Lmsquery{host: host, port: port, serverUrl: "http://" + host + ":" + strconv.Itoa(port) + "/jsonrpc.js"}
 }
