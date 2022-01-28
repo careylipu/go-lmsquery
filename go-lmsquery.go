@@ -128,6 +128,16 @@ func (l *Lmsquery) GetPlayers() []playerInfo {
 /**
 Player functions
 */
+
+func (l *Lmsquery) SetRepeat(playerId string, power int) {
+	l.query([]string{"playlist","repeat", strconv.Itoa(power)}, playerId)
+}
+func (l *Lmsquery) SetRepeatAll(power int) {
+	for _, player := range l.GetPlayers() {
+		l.SetRepeat(player.PlayerId, power)
+	}
+}
+
 func (l *Lmsquery) SetPause(playerId string, power int) {
 	l.query([]string{"pause", strconv.Itoa(power)}, playerId)
 }
